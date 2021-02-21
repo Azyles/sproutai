@@ -1,13 +1,18 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:requests/requests.dart';
 
-class PlantInfoView extends StatefulWidget {
+class PlantAddView extends StatefulWidget {
   @override
-  _PlantInfoViewState createState() => _PlantInfoViewState();
+  _PlantAddViewState createState() => _PlantAddViewState();
 }
 
-class _PlantInfoViewState extends State<PlantInfoView> {
+class _PlantAddViewState extends State<PlantAddView> {
+  var resultsList = [];
+
+  TextEditingController searchController = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +61,7 @@ class _PlantInfoViewState extends State<PlantInfoView> {
                                       filter: new ImageFilter.blur(
                                           sigmaX: 16.0, sigmaY: 16.0),
                                       child: new Container(
-                                        height: 70,
+                                        height: 50,
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.6,
@@ -68,6 +73,7 @@ class _PlantInfoViewState extends State<PlantInfoView> {
                                               left: 14, top: 2),
                                           child: new Center(
                                             child: TextField(
+                                              controller: searchController,
                                               decoration: new InputDecoration(
                                                 hintText: "Plant Name",
                                                 labelStyle: new TextStyle(
@@ -83,16 +89,37 @@ class _PlantInfoViewState extends State<PlantInfoView> {
                                   ),
                                 ),
                                 GestureDetector(
+                                  onTap: () async {
+                                    resultsList = [];
+
+                                    var r = await Requests.get(
+                                        'https://trefle.io/api/v1/species/search?q=' +
+                                            searchController.text +
+                                            '&token=dBLElJqL4EQgdyxu29TMB206AVqpUDmqCZUN4sC9oZ8');
+                                    r.raiseForStatus();
+                                    var body = r.json();
+
+                                    var data = body['data'];
+
+                                    print(r.content());
+
+                                    for (var x = 0; x <= data.length - 1; x++) {
+                                      print(data[x]);
+                                      resultsList.add(data[x]);
+                                    }
+
+                                    setState(() {});
+                                  },
                                   child: Padding(
                                     padding: const EdgeInsets.only(
                                         top: 20, left: 20),
                                     child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(20),
+                                      borderRadius: BorderRadius.circular(1000),
                                       child: new BackdropFilter(
                                         filter: new ImageFilter.blur(
                                             sigmaX: 16.0, sigmaY: 16.0),
                                         child: new Container(
-                                          height: 70,
+                                          height: 50,
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width *
@@ -124,9 +151,10 @@ class _PlantInfoViewState extends State<PlantInfoView> {
                               height: MediaQuery.of(context).size.height * 0,
                             ),
                             Expanded(
-                                child: ListView(
-                              children: [
-                                Padding(
+                                child: ListView.builder(
+                              itemCount: resultsList.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
                                   padding:
                                       const EdgeInsets.only(top: 5, left: 20),
                                   child: ClipRRect(
@@ -156,7 +184,11 @@ class _PlantInfoViewState extends State<PlantInfoView> {
                                                               10),
                                                       image: DecorationImage(
                                                           image: NetworkImage(
-                                                              "https://cdn.dribbble.com/users/2656181/screenshots/6375006/21.jpg?compress=1&resize=400x300"),
+                                                              resultsList[index]
+                                                                  [
+                                                                  'image_url'] != null ? resultsList[index]
+                                                                  [
+                                                                  'image_url'] : ),
                                                           fit: BoxFit.cover)),
                                                 ),
                                                 SizedBox(
@@ -169,13 +201,15 @@ class _PlantInfoViewState extends State<PlantInfoView> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      "Name",
+                                                      resultsList[index]
+                                                          ['common_name'],
                                                       style: TextStyle(
                                                           color: Colors.white,
                                                           fontSize: 25),
                                                     ),
                                                     Text(
-                                                      "Fancy Name",
+                                                      resultsList[index]
+                                                          ['scientific_name'],
                                                       style: TextStyle(
                                                           color: Colors.white,
                                                           fontSize: 15),
@@ -187,8 +221,8 @@ class _PlantInfoViewState extends State<PlantInfoView> {
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                );
+                              },
                             ))
                           ],
                         ),

@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'dart:core';
 
+import 'package:sproutai/AddPlant.dart';
+
 class ViewGarden extends StatefulWidget {
   ViewGarden({Key key}) : super(key: key);
 
@@ -115,7 +117,9 @@ class _ViewGardenState extends State<ViewGarden> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => PlantAddView()));
+        },
         backgroundColor: Colors.white,
         child: Icon(
           Icons.add,
