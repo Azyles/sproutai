@@ -6,6 +6,8 @@ import 'dart:core';
 
 import 'package:sproutai/AddPlant.dart';
 
+import 'dashboard.dart';
+
 class ViewGarden extends StatefulWidget {
   String gardenID = "";
 
@@ -31,8 +33,28 @@ class _ViewGardenState extends State<ViewGarden> {
                 fit: BoxFit.cover)),
         child: Column(
           children: [
+            SizedBox(height: 80,),
+            Row(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 40),
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Dashboard()));
+                      },
+                      icon: Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             Container(
-              margin: EdgeInsets.only(top: 120, bottom: 20),
+              margin: EdgeInsets.only(top: 30, bottom: 20),
               child: Text(
                 "Plants",
                 style: TextStyle(color: Colors.white, fontSize: 35),
@@ -75,13 +97,18 @@ class _ViewGardenState extends State<ViewGarden> {
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Image.network(
-                                          plantsList[index]['image'] != null
-                                              ? plantsList[index]['image']
-                                              : "https://www.sustainability-times.com/wp-content/uploads/thumbs/leaves-3420078_960_720-39pnqmosh2oq6ra9pzs54w.jpg",
+                                        child: Container(
                                           height: 80,
-                                          width: 80,
-                                          fit: BoxFit.cover,
+                                            width: 80,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(10)
+                                            ),
+                                          child: Image.network(
+                                            plantsList[index]['image'] != null
+                                                ? plantsList[index]['image']
+                                                : "https://www.sustainability-times.com/wp-content/uploads/thumbs/leaves-3420078_960_720-39pnqmosh2oq6ra9pzs54w.jpg",
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
                                       Column(
