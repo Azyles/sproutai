@@ -1,6 +1,9 @@
 //Package Imports
 import 'package:flutter/material.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sproutai/dashboard.dart';
 
 //Main Run Command
 void main() async {
@@ -15,44 +18,19 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final LocalAuthentication auth = LocalAuthentication();
+  Future updateData() {
+    Future.delayed(Duration(milliseconds: 2000)).then((_) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Dashboard()));
+  });
 
-  var authInstance = Auth();
-
-  /*
-
-  Future<void> _authenticate() async {
-    bool authenticated = false;
-    try {
-      authenticated = await auth.authenticateWithBiometrics(
-          localizedReason: 'Scan your fingerprint to authenticate',
-          useErrorDialogs: true,
-          stickyAuth: true).then((_){
-        Future.delayed(Duration(milliseconds: 2000)).then((_){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => MainFrame()));
-        });
-      });
-
-      print("AUTH: " + authenticated.toString());
-
-
-    } on PlatformException catch (e) {
-      print(e);
-    }
-    if (!mounted) return;
-
-    final String message = authenticated ? 'Authorized' : 'Not Authorized';
-    setState(() {
-      var _authorized = message;
-    });
   }
-
-   */
-
   @override
   void initState() {
     Firebase.initializeApp();
-    //updateData();
+    updateData();
 
     super.initState();
   }
