@@ -63,30 +63,45 @@ class _DashboardState extends State<Dashboard> {
                         crossAxisCount: 2,
                       ),
                       itemBuilder: (context, index) {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(30),
-                          child: new BackdropFilter(
-                            filter: new ImageFilter.blur(
-                                sigmaX: 16.0, sigmaY: 16.0),
-                            child: new Container(
-                              decoration: new BoxDecoration(
-                                  color: Colors.white.withOpacity(0.25)),
-                              child: new Center(
-                                child: Column(
-                                  children: [
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => ViewGarden()));
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(30),
+                            child: new BackdropFilter(
+                              filter: new ImageFilter.blur(
+                                  sigmaX: 16.0, sigmaY: 16.0),
+                              child: new Container(
+                                decoration: new BoxDecoration(
+                                    color: Colors.white.withOpacity(0.25)),
+                                child: new Center(
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(top: 15),
+                                        child: Image.asset(
+                                          "lib/Assets/gardenISO.png",
+                                          width: 100,
+                                        ),
+                                      ),
+                                      /*
                                     Image.network(
                                       "https://cdn2.iconfinder.com/data/icons/landscape-designer-landscape-designericons-set-iso/500/vab778_46_garden_stone_isometric_cartoon_texture_nature_construction-512.png",
                                       width: 120,
                                     ),
-                                    
-                                    Container(
-                                      child: Text(list[index]['name'],
-                                    overflow: TextOverflow.ellipsis,
-                                    
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 25)),
-                                    )
-                                  ],
+                                    */
+
+                                      Container(
+                                        margin: EdgeInsets.only(top: 10),
+                                        child: Text(list[index]['name'],
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 25)),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
