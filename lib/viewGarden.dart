@@ -11,7 +11,14 @@ class _ViewGardenState extends State<ViewGarden> {
   @override
   Widget build(BuildContext context) {
     return Container(
-       child: Container(),
+      decoration: BoxDecoration(
+        image: DecorationImage(image: AssetImage(''))
+      ),
+       child: Column(
+         children: [
+
+         ],
+       ),
     );
   }
 }
