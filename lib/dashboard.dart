@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sproutai/addGardenScreen.dart';
 import 'package:sproutai/gardenAddCameraScreen.dart';
@@ -36,130 +37,88 @@ class _DashboardState extends State<Dashboard> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.08,
             ),
-            Expanded(
-                child: GridView.count(
-              primary: false,
-  padding: const EdgeInsets.all(20),
-  crossAxisSpacing: 10,
-  mainAxisSpacing: 10,
-  crossAxisCount: 2,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(30),
-                  child: new BackdropFilter(
-                    filter: new ImageFilter.blur(sigmaX: 16.0, sigmaY:16.0),
-                    child: new Container(
-                      decoration: new BoxDecoration(
-                          color: Colors.white.withOpacity(0.25)),
-                      child: new Center(
-                        child: Column(
-                          children: [
-                            Image.network("https://cdn2.iconfinder.com/data/icons/landscape-designer-landscape-designericons-set-iso/500/vab778_46_garden_stone_isometric_cartoon_texture_nature_construction-512.png",width: 120,),
-                            Text('Garden',
-                                style: TextStyle(color: Colors.white, fontSize: 30)),
-                          ],
-                        ),
+            StreamBuilder<QuerySnapshot>(
+              stream:
+                  FirebaseFirestore.instance.collection("Gardens").snapshots(),
+              builder: (context, snap) {
+                if (snap.hasData) {
+                  var list = [];
+
+                  //print(snap.data);
+
+                  snap.data.docs.forEach((value) {
+                    var data = value.data();
+
+                    list.add(data);
+                  });
+
+                  return Expanded(
+                    child: GridView.builder(
+                      itemCount: list.length,
+                      primary: false,
+                      padding: const EdgeInsets.all(20),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        crossAxisCount: 2,
                       ),
+                      itemBuilder: (context, index) {
+                        print(index);
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ViewGarden()));
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(30),
+                            child: new BackdropFilter(
+                              filter: new ImageFilter.blur(
+                                  sigmaX: 16.0, sigmaY: 16.0),
+                              child: new Container(
+                                decoration: new BoxDecoration(
+                                    color: Colors.white.withOpacity(0.25)),
+                                child: new Center(
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(top: 15),
+                                        child: Image.asset(
+                                          "lib/Assets/gardenISO.png",
+                                          width: 100,
+                                        ),
+                                      ),
+                                      /*
+                                    Image.network(
+                                      "https://cdn2.iconfinder.com/data/icons/landscape-designer-landscape-designericons-set-iso/500/vab778_46_garden_stone_isometric_cartoon_texture_nature_construction-512.png",
+                                      width: 120,
+                                    ),
+                                    */
+
+                                      Container(
+                                        margin: EdgeInsets.only(top: 10),
+                                        child: Text(list[index]['name'],
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 25)),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     ),
-                  ),
-                ),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(30),
-                  child: new BackdropFilter(
-                    filter: new ImageFilter.blur(sigmaX: 16.0, sigmaY:16.0),
-                    child: new Container(
-                      decoration: new BoxDecoration(
-                          color: Colors.white.withOpacity(0.25)),
-                      child: new Center(
-                        child: Column(
-                          children: [
-                            Image.network("https://cdn2.iconfinder.com/data/icons/landscape-designer-landscape-designericons-set-iso/500/vab778_46_garden_stone_isometric_cartoon_texture_nature_construction-512.png",width: 120,),
-                            Text('Garden',
-                                style: TextStyle(color: Colors.white, fontSize: 30)),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(30),
-                  child: new BackdropFilter(
-                    filter: new ImageFilter.blur(sigmaX: 16.0, sigmaY:16.0),
-                    child: new Container(
-                      decoration: new BoxDecoration(
-                          color: Colors.white.withOpacity(0.25)),
-                      child: new Center(
-                        child: Column(
-                          children: [
-                            Image.network("https://cdn2.iconfinder.com/data/icons/landscape-designer-landscape-designericons-set-iso/500/vab778_46_garden_stone_isometric_cartoon_texture_nature_construction-512.png",width: 120,),
-                            Text('Garden',
-                                style: TextStyle(color: Colors.white, fontSize: 30)),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(30),
-                  child: new BackdropFilter(
-                    filter: new ImageFilter.blur(sigmaX: 16.0, sigmaY:16.0),
-                    child: new Container(
-                      decoration: new BoxDecoration(
-                          color: Colors.white.withOpacity(0.25)),
-                      child: new Center(
-                        child: Column(
-                          children: [
-                            Image.network("https://cdn2.iconfinder.com/data/icons/landscape-designer-landscape-designericons-set-iso/500/vab778_46_garden_stone_isometric_cartoon_texture_nature_construction-512.png",width: 120,),
-                            Text('Garden',
-                                style: TextStyle(color: Colors.white, fontSize: 30)),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(30),
-                  child: new BackdropFilter(
-                    filter: new ImageFilter.blur(sigmaX: 16.0, sigmaY:16.0),
-                    child: new Container(
-                      decoration: new BoxDecoration(
-                          color: Colors.white.withOpacity(0.25)),
-                      child: new Center(
-                        child: Column(
-                          children: [
-                            Image.network("https://cdn2.iconfinder.com/data/icons/landscape-designer-landscape-designericons-set-iso/500/vab778_46_garden_stone_isometric_cartoon_texture_nature_construction-512.png",width: 120,),
-                            Text('Garden',
-                                style: TextStyle(color: Colors.white, fontSize: 30)),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(30),
-                  child: new BackdropFilter(
-                    filter: new ImageFilter.blur(sigmaX: 16.0, sigmaY:16.0),
-                    child: new Container(
-                      decoration: new BoxDecoration(
-                          color: Colors.white.withOpacity(0.25)),
-                      child: new Center(
-                        child: Column(
-                          children: [
-                            Image.network("https://cdn2.iconfinder.com/data/icons/landscape-designer-landscape-designericons-set-iso/500/vab778_46_garden_stone_isometric_cartoon_texture_nature_construction-512.png",width: 120,),
-                            Text('Garden',
-                                style: TextStyle(color: Colors.white, fontSize: 30)),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ))
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            ),
           ],
         ),
       ),
