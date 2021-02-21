@@ -1,7 +1,9 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:requests/requests.dart';
 import 'package:sproutai/dashboard.dart';
 
 class AddGarden extends StatefulWidget {
@@ -200,20 +202,103 @@ class _AddGardenState extends State<AddGarden> {
                                   borderRadius: BorderRadius.circular(10)),
                               color: Color.fromRGBO(64, 206, 162, 1),
                               onPressed: () async {
+                                var resultsList = [];
+
+                                var r = await Requests.get(
+                                    'https://trefle.io/api/v1/species/search?q=' +
+                                        "spinach" +
+                                        '&token=dBLElJqL4EQgdyxu29TMB206AVqpUDmqCZUN4sC9oZ8');
+                                r.raiseForStatus();
+                                var body = r.json();
+
+                                var data = body['data'];
+
+                                for (var x = 0; x <= data.length - 1; x++) {
+                                  if (data[x]["common_name"] != null &&
+                                      data[x]["scientific_name"] != null) {
+                                    resultsList.add(data[x]);
+                                  }
+                                }
+
                                 FirebaseFirestore.instance
                                     .collection("Gardens")
-                                    .doc()
-                                    .set({
+                                    .add({
                                   "name": nameController.text,
                                   "state": stateController.text,
                                   "country": countryController.text,
                                   "width": widget.gardenWidth,
                                   "height": widget.gardenHeight,
-                                }).then((val) {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Dashboard()));
+                                }).then((doc) {
+                                  print(doc);
+
+                                  var id = doc.id;
+
+                                  Random random = new Random();
+                                  int randomNumber1 = random.nextInt(
+                                      resultsList.length -
+                                          1); // from 0 upto 99 included
+
+                                  int randomNumber2 = random.nextInt(
+                                      resultsList.length -
+                                          1); // from 0 upto 99 included
+
+                                  int randomNumber3 = random.nextInt(
+                                      resultsList.length -
+                                          1); // from 0 upto 99 included
+
+                                  FirebaseFirestore.instance
+                                      .collection("Gardens")
+                                      .doc(id)
+                                      .collection("Plants")
+                                      .add({
+                                    "image": resultsList[randomNumber1]
+                                        ['image_url'],
+                                    "plant name": resultsList[randomNumber1]
+                                        ['common_name'],
+                                    "recommendation": true,
+                                    "scientific name":
+                                        resultsList[randomNumber1]
+                                            ['scientific_name']
+                                  });
+
+                                  FirebaseFirestore.instance
+                                      .collection("Gardens")
+                                      .doc(id)
+                                      .collection("Plants")
+                                      .add({
+                                    "image": resultsList[randomNumber2]
+                                        ['image_url'],
+                                    "plant name": resultsList[randomNumber2]
+                                        ['common_name'],
+                                    "recommendation": true,
+                                    "scientific name":
+                                        resultsList[randomNumber2]
+                                            ['scientific_name']
+                                  });
+
+                                  FirebaseFirestore.instance
+                                      .collection("Gardens")
+                                      .doc(id)
+                                      .collection("Plants")
+                                      .add({
+                                    "image": resultsList[randomNumber3]
+                                        ['image_url'],
+                                    "plant name": resultsList[randomNumber3]
+                                        ['common_name'],
+                                    "recommendation": true,
+                                    "scientific name":
+                                        resultsList[randomNumber3]
+                                            ['scientific_name']
+                                  }).then((val) {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Dashboard()));
+                                  });
+
+                                  /*
+
+                                          */
                                 });
                               },
                               child: Text(

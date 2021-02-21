@@ -210,6 +210,7 @@ class _ViewGardenState extends State<ViewGarden> {
                         .collection("Gardens")
                         .doc(widget.gardenID)
                         .collection("Plants")
+                        .where("recommendation", isNull: true)
                         .snapshots(),
                     builder: (context, snap) {
                       if (snap.hasData) {
