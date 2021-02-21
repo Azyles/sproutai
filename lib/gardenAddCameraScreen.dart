@@ -27,7 +27,7 @@ class _GardenAddCameraState extends State<GardenAddCamera> {
   }
 
   void _handleOnPlaneTap(List<ArCoreHitTestResult> hits) {
-    final hit = hits.first;
+    final hit = hits.last;
     print(hit.distance);
 
     final material = ArCoreMaterial(color: Color.fromARGB(120, 66, 134, 244));
@@ -37,7 +37,7 @@ class _GardenAddCameraState extends State<GardenAddCamera> {
     );
     final node = ArCoreNode(
       shape: sphere,
-      position: vector.Vector3(0, 0, -1.5),
+      position: vector.Vector3(0, -1, -2),
     );
 
     arCoreController.addArCoreNodeWithAnchor(node);
