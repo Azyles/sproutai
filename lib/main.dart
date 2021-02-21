@@ -19,14 +19,15 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   Future updateData() {
-    Future.delayed(Duration(milliseconds: 2000)).then((_) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Dashboard()));
-  });
+    FirebaseAuth.instance.signInWithEmailAndPassword(email: "test@gmail.com", password: "password123").then((user){
+      Future.delayed(Duration(milliseconds: 2000)).then((_) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Dashboard()));
+      });
+    });
 
   }
+
   @override
   void initState() {
     Firebase.initializeApp();
