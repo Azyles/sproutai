@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:sproutai/dashboard.dart';
 
 class AddGarden extends StatefulWidget {
+  final double gardenWidth;
+  final double gardenHeight;
+
+  AddGarden(this.gardenWidth, this.gardenHeight);
   @override
   _AddGardenState createState() => _AddGardenState();
 }
@@ -202,7 +206,9 @@ class _AddGardenState extends State<AddGarden> {
                                     .set({
                                   "name": nameController.text,
                                   "state": stateController.text,
-                                  "country": countryController.text
+                                  "country": countryController.text,
+                                  "width": widget.gardenWidth,
+                                  "height": widget.gardenHeight,
                                 }).then((val) {
                                   Navigator.push(
                                       context,

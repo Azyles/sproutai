@@ -6,6 +6,8 @@ import 'package:sproutai/addGardenScreen.dart';
 import 'package:sproutai/gardenAddCameraScreen.dart';
 import 'package:sproutai/viewGarden.dart';
 
+import 'addGardenScreen.dart';
+
 class Dashboard extends StatefulWidget {
   Dashboard({Key key}) : super(key: key);
 
