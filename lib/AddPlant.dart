@@ -1,15 +1,29 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:requests/requests.dart';
+import 'package:sproutai/viewGarden.dart';
 
 class PlantAddView extends StatefulWidget {
+  String gardenID = "";
+
+  PlantAddView(id) {
+    gardenID = id;
+  }
+
   @override
   _PlantAddViewState createState() => _PlantAddViewState();
 }
 
 class _PlantAddViewState extends State<PlantAddView> {
   var resultsList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    print(widget.gardenID);
+  }
 
   TextEditingController searchController = new TextEditingController();
 
@@ -26,8 +40,28 @@ class _PlantAddViewState extends State<PlantAddView> {
                 fit: BoxFit.cover)),
         child: Column(
           children: [
+            Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: 50),
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ViewGarden(widget.gardenID)));
+                    },
+                    icon: Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              ],
+            ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.12,
+              height: MediaQuery.of(context).size.height * 0.06,
             ),
             Text(
               "Add Plants",
@@ -101,11 +135,11 @@ class _PlantAddViewState extends State<PlantAddView> {
 
                                     var data = body['data'];
 
-                                    print(r.content());
-
                                     for (var x = 0; x <= data.length - 1; x++) {
-                                      print(data[x]);
-                                      resultsList.add(data[x]);
+                                      if (data[x]["common_name"] != null &&
+                                          data[x]["scientific_name"] != null) {
+                                        resultsList.add(data[x]);
+                                      }
                                     }
 
                                     setState(() {});
@@ -140,18 +174,16 @@ class _PlantAddViewState extends State<PlantAddView> {
                               ],
                             ),
                             SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.02,
+                              height: 30,
                             ),
                             Text(
                               "Results",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 20),
                             ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0,
-                            ),
                             Expanded(
                                 child: ListView.builder(
+                              physics: BouncingScrollPhysics(),
                               itemCount: resultsList.length,
                               itemBuilder: (context, index) {
                                 return Padding(
@@ -174,47 +206,110 @@ class _PlantAddViewState extends State<PlantAddView> {
                                             padding: const EdgeInsets.only(
                                                 left: 14, top: 2),
                                             child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
-                                                Container(
-                                                  height: 50,
-                                                  width: 50,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      image: DecorationImage(
-                                                          image: NetworkImage(
-                                                              resultsList[index]
-                                                                  [
-                                                                  'image_url'] != null ? resultsList[index]
-                                                                  [
-                                                                  'image_url'] : ),
-                                                          fit: BoxFit.cover)),
-                                                ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                Row(
                                                   children: [
-                                                    Text(
-                                                      resultsList[index]
-                                                          ['common_name'],
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 25),
+                                                    Container(
+                                                      height: 50,
+                                                      width: 50,
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                          image: DecorationImage(
+                                                              image: NetworkImage(resultsList[
+                                                                              index]
+                                                                          [
+                                                                          'image_url'] !=
+                                                                      null
+                                                                  ? resultsList[
+                                                                          index]
+                                                                      [
+                                                                      'image_url']
+                                                                  : "https://www.sustainability-times.com/wp-content/uploads/thumbs/leaves-3420078_960_720-39pnqmosh2oq6ra9pzs54w.jpg"),
+                                                              fit: BoxFit
+                                                                  .cover)),
                                                     ),
-                                                    Text(
-                                                      resultsList[index]
-                                                          ['scientific_name'],
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 15),
+                                                    SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          resultsList[index][
+                                                                      'common_name'] !=
+                                                                  null
+                                                              ? resultsList[
+                                                                      index][
+                                                                  'common_name']
+                                                              : "Failed to load",
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 25),
+                                                        ),
+                                                        Text(
+                                                          resultsList[index][
+                                                                      'scientific_name'] !=
+                                                                  null
+                                                              ? resultsList[
+                                                                      index][
+                                                                  'scientific_name']
+                                                              : "Failed to load",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 15),
+                                                        ),
+                                                      ],
                                                     ),
                                                   ],
+                                                ),
+                                                IconButton(
+                                                  onPressed: () {
+                                                    FirebaseFirestore.instance
+                                                        .collection("Gardens")
+                                                        .doc(widget.gardenID)
+                                                        .collection("Plants")
+                                                        .doc()
+                                                        .set({
+                                                      "plant name":
+                                                          resultsList[index]
+                                                              ["common_name"],
+                                                      "scientific name":
+                                                          resultsList[index][
+                                                              "scientific_name"],
+                                                      "image":
+                                                          resultsList[index]
+                                                              ["image_url"],
+                                                    }).then((va) {
+                                                      Scaffold.of(context)
+                                                          .showSnackBar(
+                                                              SnackBar(
+                                                        content: Text(resultsList[
+                                                                    index][
+                                                                "common_name"] +
+                                                            " has been added to your garden."),
+                                                        duration: Duration(
+                                                            seconds: 3),
+                                                      ));
+                                                    });
+                                                  },
+                                                  icon: Icon(
+                                                    Icons.add,
+                                                    color: Colors.white,
+                                                  ),
                                                 ),
                                               ],
                                             )),

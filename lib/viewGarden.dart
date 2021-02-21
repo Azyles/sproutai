@@ -6,7 +6,11 @@ import 'dart:core';
 import 'package:sproutai/AddPlant.dart';
 
 class ViewGarden extends StatefulWidget {
-  ViewGarden({Key key}) : super(key: key);
+  String gardenID = "";
+
+  ViewGarden(id) {
+    gardenID = id;
+  }
 
   @override
   _ViewGardenState createState() => _ViewGardenState();
@@ -118,7 +122,10 @@ class _ViewGardenState extends State<ViewGarden> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => PlantAddView()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => PlantAddView(widget.gardenID)));
         },
         backgroundColor: Colors.white,
         child: Icon(

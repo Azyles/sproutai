@@ -54,6 +54,8 @@ class _DashboardState extends State<Dashboard> {
                   snap.data.docs.forEach((value) {
                     var data = value.data();
 
+                    data['id'] = value.id;
+
                     list.add(data);
                   });
 
@@ -114,7 +116,7 @@ class _DashboardState extends State<Dashboard> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => ViewGarden()));
+                                      builder: (context) => ViewGarden(list[index]['id'])));
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(30),
