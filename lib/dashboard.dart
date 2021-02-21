@@ -32,7 +32,10 @@ class _DashboardState extends State<Dashboard> {
             ),
             Text(
               "Gardens",
-              style: TextStyle(color: Colors.white, fontSize: 45),
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 45,
+                  fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.08,
@@ -52,6 +55,8 @@ class _DashboardState extends State<Dashboard> {
                     list.add(data);
                   });
 
+                  list.add("data");
+
                   return Expanded(
                     child: GridView.builder(
                       itemCount: list.length,
@@ -64,53 +69,92 @@ class _DashboardState extends State<Dashboard> {
                       ),
                       itemBuilder: (context, index) {
                         print(index);
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ViewGarden()));
-                          },
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(30),
-                            child: new BackdropFilter(
-                              filter: new ImageFilter.blur(
-                                  sigmaX: 16.0, sigmaY: 16.0),
-                              child: new Container(
-                                decoration: new BoxDecoration(
-                                    color: Colors.white.withOpacity(0.25)),
-                                child: new Center(
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.only(top: 15),
-                                        child: Image.asset(
-                                          "lib/Assets/gardenISO.png",
-                                          width: 100,
+
+                        if (index == list.length - 1 || list.length == 0) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AddGarden()));
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(30),
+                              child: new BackdropFilter(
+                                filter: new ImageFilter.blur(
+                                    sigmaX: 16.0, sigmaY: 16.0),
+                                child: new Container(
+                                  decoration: new BoxDecoration(
+                                      color: Colors.white.withOpacity(0.25)),
+                                  child: new Center(
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.only(top: 70),
+                                          child: Center(
+                                            child: Icon(
+                                              Icons.add,
+                                              color: Colors.white,
+                                              size: 50,
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        } else {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ViewGarden()));
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(30),
+                              child: new BackdropFilter(
+                                filter: new ImageFilter.blur(
+                                    sigmaX: 16.0, sigmaY: 16.0),
+                                child: new Container(
+                                  decoration: new BoxDecoration(
+                                      color: Colors.white.withOpacity(0.25)),
+                                  child: new Center(
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.only(top: 15),
+                                          child: Image.asset(
+                                            "lib/Assets/gardenISO.png",
+                                            width: 100,
+                                          ),
                                         ),
-                                      ),
-                                      /*
+                                        /*
                                     Image.network(
                                       "https://cdn2.iconfinder.com/data/icons/landscape-designer-landscape-designericons-set-iso/500/vab778_46_garden_stone_isometric_cartoon_texture_nature_construction-512.png",
                                       width: 120,
                                     ),
                                     */
 
-                                      Container(
-                                        margin: EdgeInsets.only(top: 10),
-                                        child: Text(list[index]['name'],
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 25)),
-                                      )
-                                    ],
+                                        Container(
+                                          margin: EdgeInsets.only(top: 10),
+                                          child: Text(list[index]['name'],
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 25)),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        );
+                          );
+                        }
                       },
                     ),
                   );
