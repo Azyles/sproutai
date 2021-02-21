@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:sproutai/addGardenScreen.dart';
 import 'package:sproutai/gardenAddCameraScreen.dart';
@@ -13,34 +15,151 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Column(
+    return Scaffold(
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: NetworkImage(
+                    'https://i.pinimg.com/736x/24/b9/00/24b900ccb620531b3e3283965cb49aac.jpg'),
+                fit: BoxFit.cover)),
+        child: Column(
           children: [
             SizedBox(
-              height: 100,
+              height: MediaQuery.of(context).size.height * 0.12,
             ),
-            RaisedButton(
-              child: Text("Add garden screen"),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AddGarden()));
-              },
+            Text(
+              "Gardens",
+              style: TextStyle(color: Colors.white, fontSize: 45),
             ),
-            RaisedButton(
-              child: Text("View garden screen"),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ViewGarden()));
-              },
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.08,
             ),
-            RaisedButton(
-              child: Text("Add garden Camera Screen"),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => GardenAddCamera()));
-              },
-            ),
+            Expanded(
+                child: GridView.count(
+              primary: false,
+  padding: const EdgeInsets.all(20),
+  crossAxisSpacing: 10,
+  mainAxisSpacing: 10,
+  crossAxisCount: 2,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: new BackdropFilter(
+                    filter: new ImageFilter.blur(sigmaX: 16.0, sigmaY:16.0),
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                          color: Colors.white.withOpacity(0.25)),
+                      child: new Center(
+                        child: Column(
+                          children: [
+                            Image.network("https://cdn2.iconfinder.com/data/icons/landscape-designer-landscape-designericons-set-iso/500/vab778_46_garden_stone_isometric_cartoon_texture_nature_construction-512.png",width: 120,),
+                            Text('Garden',
+                                style: TextStyle(color: Colors.white, fontSize: 30)),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: new BackdropFilter(
+                    filter: new ImageFilter.blur(sigmaX: 16.0, sigmaY:16.0),
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                          color: Colors.white.withOpacity(0.25)),
+                      child: new Center(
+                        child: Column(
+                          children: [
+                            Image.network("https://cdn2.iconfinder.com/data/icons/landscape-designer-landscape-designericons-set-iso/500/vab778_46_garden_stone_isometric_cartoon_texture_nature_construction-512.png",width: 120,),
+                            Text('Garden',
+                                style: TextStyle(color: Colors.white, fontSize: 30)),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: new BackdropFilter(
+                    filter: new ImageFilter.blur(sigmaX: 16.0, sigmaY:16.0),
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                          color: Colors.white.withOpacity(0.25)),
+                      child: new Center(
+                        child: Column(
+                          children: [
+                            Image.network("https://cdn2.iconfinder.com/data/icons/landscape-designer-landscape-designericons-set-iso/500/vab778_46_garden_stone_isometric_cartoon_texture_nature_construction-512.png",width: 120,),
+                            Text('Garden',
+                                style: TextStyle(color: Colors.white, fontSize: 30)),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: new BackdropFilter(
+                    filter: new ImageFilter.blur(sigmaX: 16.0, sigmaY:16.0),
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                          color: Colors.white.withOpacity(0.25)),
+                      child: new Center(
+                        child: Column(
+                          children: [
+                            Image.network("https://cdn2.iconfinder.com/data/icons/landscape-designer-landscape-designericons-set-iso/500/vab778_46_garden_stone_isometric_cartoon_texture_nature_construction-512.png",width: 120,),
+                            Text('Garden',
+                                style: TextStyle(color: Colors.white, fontSize: 30)),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: new BackdropFilter(
+                    filter: new ImageFilter.blur(sigmaX: 16.0, sigmaY:16.0),
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                          color: Colors.white.withOpacity(0.25)),
+                      child: new Center(
+                        child: Column(
+                          children: [
+                            Image.network("https://cdn2.iconfinder.com/data/icons/landscape-designer-landscape-designericons-set-iso/500/vab778_46_garden_stone_isometric_cartoon_texture_nature_construction-512.png",width: 120,),
+                            Text('Garden',
+                                style: TextStyle(color: Colors.white, fontSize: 30)),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: new BackdropFilter(
+                    filter: new ImageFilter.blur(sigmaX: 16.0, sigmaY:16.0),
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                          color: Colors.white.withOpacity(0.25)),
+                      child: new Center(
+                        child: Column(
+                          children: [
+                            Image.network("https://cdn2.iconfinder.com/data/icons/landscape-designer-landscape-designericons-set-iso/500/vab778_46_garden_stone_isometric_cartoon_texture_nature_construction-512.png",width: 120,),
+                            Text('Garden',
+                                style: TextStyle(color: Colors.white, fontSize: 30)),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ))
           ],
         ),
       ),
