@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:core';
 
@@ -37,86 +38,87 @@ class _ViewGardenState extends State<ViewGarden> {
                 style: TextStyle(color: Colors.white, fontSize: 35),
               ),
             ),
-            Expanded(
-                child: ListView(
-              primary: false,
-              children: [
-                GestureDetector(
-                  onTap: () {},
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: new BackdropFilter(
-                        filter:
-                            new ImageFilter.blur(sigmaX: 16.0, sigmaY: 16.0),
-                        child: new Container(
-                          decoration: new BoxDecoration(
-                              color: Colors.white.withOpacity(0.25)),
-                          child: new Center(
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Image.network(
-                                    "https://cdn2.iconfinder.com/data/icons/landscape-designer-landscape-designericons-set-iso/500/vab778_46_garden_stone_isometric_cartoon_texture_nature_construction-512.png",
-                                    height: 80,
+            StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection("Gardens")
+                  .doc(widget.gardenID)
+                  .collection("Plants")
+                  .snapshots(),
+              builder: (context, snap) {
+                if (snap.hasData) {
+                  var plantsList = [];
+
+                  snap.data.docs.forEach((data) {
+                    plantsList.add(data);
+                  });
+
+                  return Expanded(
+                      child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    itemCount: plantsList.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {},
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 7),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: new BackdropFilter(
+                              filter: new ImageFilter.blur(
+                                  sigmaX: 16.0, sigmaY: 16.0),
+                              child: new Container(
+                                decoration: new BoxDecoration(
+                                    color: Colors.white.withOpacity(0.25)),
+                                child: new Center(
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Image.network(
+                                          plantsList[index]['image'] != null
+                                              ? plantsList[index]['image']
+                                              : "https://www.sustainability-times.com/wp-content/uploads/thumbs/leaves-3420078_960_720-39pnqmosh2oq6ra9pzs54w.jpg",
+                                          height: 80,
+                                          width: 80,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(plantsList[index]['plant name'],
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 25,
+                                                  fontWeight: FontWeight.w600)),
+                                          Text(
+                                              plantsList[index]
+                                                  ['scientific name'],
+                                              style: TextStyle(
+                                                color: Colors.grey[300],
+                                                fontSize: 18,
+                                              )),
+                                        ],
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                Text('Cool Plant',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.w600)),
-                              ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: new BackdropFilter(
-                        filter:
-                            new ImageFilter.blur(sigmaX: 16.0, sigmaY: 16.0),
-                        child: new Container(
-                          decoration: new BoxDecoration(
-                              color: Colors.white.withOpacity(0.25)),
-                          child: new Center(
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Image.network(
-                                    "https://cdn2.iconfinder.com/data/icons/landscape-designer-landscape-designericons-set-iso/500/vab778_46_garden_stone_isometric_cartoon_texture_nature_construction-512.png",
-                                    height: 80,
-                                  ),
-                                ),
-                                Text(
-                                  'Cool Plant',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ))
+                      );
+                    },
+                  ));
+                } else {
+                  return Center(child: Text("No Data"));
+                }
+              },
+            ),
           ],
         ),
       ),
