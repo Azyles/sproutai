@@ -29,13 +29,32 @@ class _AddGardenState extends State<AddGarden> {
           )),
           child: Column(
             children: [
+              Row(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 40),
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Dashboard()));
+                      },
+                      icon: Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               ClipRect(
                 child: new BackdropFilter(
                   filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                   child: new Container(
                       height: MediaQuery.of(context).size.height * 0.70,
                       margin: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height * 0.25),
+                          top: MediaQuery.of(context).size.height * 0.15),
                       width: MediaQuery.of(context).size.width * 0.9,
                       decoration: new BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
