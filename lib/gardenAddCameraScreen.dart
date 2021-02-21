@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:arcore_flutter_plugin/arcore_flutter_plugin.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
 
+import 'addGardenScreen.dart';
+
 class GardenAddCamera extends StatefulWidget {
   @override
   _GardenAddCameraState createState() => _GardenAddCameraState();
@@ -91,11 +93,25 @@ class _GardenAddCameraState extends State<GardenAddCamera> {
   }
 
   @override
+  void dispose() {
+    arCoreController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ArCoreView(
         onArCoreViewCreated: _onArCoreViewCreated,
         enableTapRecognizer: true,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => AddGarden(400, 400)));
+        },
+        child: Icon(Icons.scanner),
+        backgroundColor: Colors.green,
       ),
     );
   }
