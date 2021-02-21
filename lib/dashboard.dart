@@ -78,7 +78,7 @@ class _DashboardState extends State<Dashboard> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => AddGarden()));
+                                      builder: (context) => GardenAddCamera()));
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(30),
