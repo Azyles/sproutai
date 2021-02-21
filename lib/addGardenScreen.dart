@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sproutai/dashboard.dart';
 
 class AddGarden extends StatefulWidget {
   @override
@@ -9,6 +10,11 @@ class AddGarden extends StatefulWidget {
 }
 
 class _AddGardenState extends State<AddGarden> {
+  TextEditingController nameController = new TextEditingController();
+  TextEditingController stateController = new TextEditingController();
+
+  TextEditingController countryController = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -80,6 +86,7 @@ class _AddGardenState extends State<AddGarden> {
                                           borderRadius:
                                               BorderRadius.circular(5)),
                                       child: TextField(
+                                        controller: nameController,
                                         style: TextStyle(
                                           color: Colors.white,
                                         ),
@@ -116,6 +123,7 @@ class _AddGardenState extends State<AddGarden> {
                                           borderRadius:
                                               BorderRadius.circular(5)),
                                       child: TextField(
+                                        controller: stateController,
                                         style: TextStyle(
                                           color: Colors.white,
                                         ),
@@ -152,6 +160,7 @@ class _AddGardenState extends State<AddGarden> {
                                           borderRadius:
                                               BorderRadius.circular(5)),
                                       child: TextField(
+                                        controller: countryController,
                                         style: TextStyle(
                                           color: Colors.white,
                                         ),
@@ -167,13 +176,20 @@ class _AddGardenState extends State<AddGarden> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
                               color: Color.fromRGBO(64, 206, 162, 1),
-                              onPressed: () {
+                              onPressed: () async {
                                 FirebaseFirestore.instance
                                     .collection("Gardens")
                                     .doc()
                                     .set({
-                                      "name": 
-                                    });
+                                  "name": nameController.text,
+                                  "state": stateController.text,
+                                  "country": countryController.text
+                                }).then((val) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Dashboard()));
+                                });
                               },
                               child: Text(
                                 "Add Garden",
