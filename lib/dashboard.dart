@@ -63,9 +63,13 @@ class _DashboardState extends State<Dashboard> {
                         crossAxisCount: 2,
                       ),
                       itemBuilder: (context, index) {
+                        print(index);
                         return GestureDetector(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => ViewGarden()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ViewGarden()));
                           },
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(30),
