@@ -40,11 +40,14 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Color.fromRGBO(21, 21, 21, 1),
         body: Center(
           child: Container(
-            height: 100,
-            width: 100,
+            height: 150,
+            width: 150,
+          child: ClipRRect(
+              child: Image.asset("lib/Assets/logo.png"),
+              borderRadius: BorderRadius.circular(15),
+            ),
           ),
         ),
       ),
