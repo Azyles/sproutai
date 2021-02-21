@@ -17,7 +17,11 @@ class _ViewGardenState extends State<ViewGarden> {
       body: Container(
         // however u want to do background img
         width: double.infinity,
-        color: Colors.amberAccent,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: NetworkImage(
+                    'https://i.pinimg.com/736x/24/b9/00/24b900ccb620531b3e3283965cb49aac.jpg'),
+                fit: BoxFit.cover)),
         child: Column(
 
           children: [
