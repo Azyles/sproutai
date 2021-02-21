@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:arcore_flutter_plugin/arcore_flutter_plugin.dart';
+
 
 class GardenAddCamera extends StatefulWidget {
   GardenAddCamera({Key key}) : super(key: key);
@@ -10,8 +12,12 @@ class GardenAddCamera extends StatefulWidget {
 class _GardenAddCameraState extends State<GardenAddCamera> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-       child: Container(),
+    return Scaffold(
+       body: Center(
+                child: Container(
+           child: Text('testing'),
+         ),
+       ),
     );
   }
 }
