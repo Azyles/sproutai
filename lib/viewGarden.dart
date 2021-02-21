@@ -27,7 +27,10 @@ class _ViewGardenState extends State<ViewGarden> {
           children: [
             Container(
               margin: EdgeInsets.symmetric(vertical: 80),
-              child: Text('Plants'),
+              child: Text(
+              "Gardens",
+              style: TextStyle(color: Colors.white, fontSize: 35),
+            ),
             ),
             Expanded(
                 child: ListView(
