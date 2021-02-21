@@ -17,24 +17,28 @@ class _DashboardState extends State<Dashboard> {
       home: Scaffold(
         body: Column(
           children: [
+            SizedBox(
+              height: 100,
+            ),
             RaisedButton(
               child: Text("Add garden screen"),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => AddGarden()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AddGarden()));
               },
             ),
-
             RaisedButton(
               child: Text("View garden screen"),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ViewGarden()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ViewGarden()));
               },
             ),
-
             RaisedButton(
               child: Text("Add garden Camera Screen"),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => GardenAddCamera()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => GardenAddCamera()));
               },
             ),
           ],
