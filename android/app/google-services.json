@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "531144275266",
+    "project_id": "sproutai",
+    "storage_bucket": "sproutai.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:531144275266:android:21090dec5c3476df53c4db",
+        "android_client_info": {
+          "package_name": "com.example.sproutai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "531144275266-bbc6mtkltvrpo05b5s171urfp0042pfg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUL3vTu-UfzRpcsKvA1firMjbDPJ4KJNk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "531144275266-bbc6mtkltvrpo05b5s171urfp0042pfg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
